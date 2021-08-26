@@ -43,6 +43,15 @@ re – Библиотека для работы с регулярными выр
 '''
 
 
+def any_email():
+    s = 'привет1 привет22 привет333 aaskorohodov@gmail.com hi@gmail.com'
+    pattern = r'\w+@\w+[.][a-z]+'
+    res = re.findall(pattern, s)
+    print(res)
+
+#any_email()
+
+
 def any_3_letters_words():
     '''Поиск любые пять цифер'''
     s = 'asd44444asdasd555555555577777888 asasdd asd dsa asdfasfjhsf fff'
@@ -50,7 +59,7 @@ def any_3_letters_words():
     res = re.findall(pattern, s)
     print(res)
 
-any_3_letters_words()
+#any_3_letters_words()
 
 
 def replace():
@@ -109,3 +118,4 @@ def find_all_5_num():
     print(res)
 
 #find_all_5_num()
+
