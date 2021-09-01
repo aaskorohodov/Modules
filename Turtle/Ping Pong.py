@@ -2,33 +2,59 @@ import random
 import time
 import turtle
 from turtle import *
+import pygame
 
+
+pygame.mixer.init()
+hit = pygame.mixer.Sound('sounds/hit.mp3')
+fail = pygame.mixer.Sound('sounds/fail.mp3')
+score_sound = pygame.mixer.Sound('sounds/score.mp3')
+super_hit_sound = pygame.mixer.Sound('sounds/super_hit.mp3')
+super_power = pygame.mixer.Sound('sounds/super_power.mp3')
+victory = pygame.mixer.Sound('sounds/victory.mp3')
+wall_hit = pygame.mixer.Sound('sounds/wall_hit.mp3')
+freeze = pygame.mixer.Sound('sounds/freeze.mp3')
 
 FONT = ('Arial', 44)
+super_hit = 0
 
 
 class Rockets(Turtle):
     def __init__(self, posit):
         super().__init__()
-        self.speed(3)
+        self.speed(2)
         self.shape("square")
         self.color("white")
         self.shapesize(stretch_wid=5, stretch_len=1)
         self.penup()
         self.goto(posit, 0)
         self.bot_speed = 1
+        self.freeze = 0
 
     def move_up(self):
-        y = self.ycor() + 10
+        y = self.ycor() + 20
         if y > 350:
             y = 350
         self.sety(y)
 
     def move_down(self):
-        y = self.ycor() - 10
+        y = self.ycor() - 20
         if y < -350:
             y = -350
         self.sety(y)
+
+    def super_hit(self):
+        global super_hit
+        self.color('red')
+        super_hit = 1
+        super_power.play()
+
+    def freeze_hit(self):
+        global super_hit
+        self.freeze = 1
+        self.color('blue')
+        freeze.play()
+        super_hit = 0
 
 
 class Ball(Turtle):
@@ -36,7 +62,7 @@ class Ball(Turtle):
         super().__init__()
         self.shape('circle')
         self.color('white')
-        self.dx = random.choice([-1.5, 1.5])
+        self.dx = random.choice([-2, 2])
         self.dy = random.choice([-1, 1])
         self.penup()
         self.ball_speed = self.dx
@@ -112,8 +138,8 @@ def start_game():
 
     board()
     net()
-    player = make_rockets(700)
-    bot = make_rockets(-700)
+    player = make_rockets(650)
+    bot = make_rockets(-650)
     ball = make_ball()
     p1, p2 = make_count()
 
@@ -121,15 +147,18 @@ def start_game():
 
 
 window, player, bot, ball, p1, p2 = start_game()
-window.tracer(2)
+window.tracer(10)
 window.listen()
 window.onkeypress(player.move_up, "Up")
 window.onkeypress(player.move_down, "Down")
+window.onkeypress(player.super_hit, "space")
+window.onkeypress(player.freeze_hit, "q")
 
 
 def score():
     p1.clear()
     p2.clear()
+    score_sound.play()
     p1.write(p1.count, font=FONT)
     p2.write(p2.count, font=FONT)
 
@@ -139,12 +168,14 @@ def player_fail(stat=None):
     ball.dx = 0
     if stat is None:
         for i in range(3):
+            fail.play()
             ball.color('red')
             window.bgcolor('yellow')
             time.sleep(0.1)
             ball.color('white')
             window.bgcolor('black')
             time.sleep(0.1)
+    time.sleep(1)
     ball.speed(5)
     ball.goto(0, 0)
     ball.speed(0)
@@ -178,6 +209,7 @@ class Wow(Turtle):
 
 
 def wow():
+    victory.play()
     window.tracer(20)
     wows = []
     for i in range(30):
@@ -190,7 +222,7 @@ def wow():
             wow.y_speed = wow.y_speed - wow.grav
             wow.goto(wow.xcor() + wow.x_speed, wow.ycor() + wow.y_speed)
 
-    window.tracer(2)
+    window.tracer(10)
 
 
 while True:
@@ -200,8 +232,10 @@ while True:
 
     if ball.ycor() >= 395:
         ball.dy = -ball.dy
+        wall_hit.play()
     elif ball.ycor() <= -395:
         ball.dy = -ball.dy
+        wall_hit.play()
     elif ball.xcor() >= 700:
         p1.count += 1
         player_fail()
@@ -213,16 +247,28 @@ while True:
         bot.bot_speed += 0.5
         ball.ball_speed += 0.7
         wow()
-    if player.ycor() - 50 <= ball.ycor() <= player.ycor() + 50 and player.xcor() - 10 <= ball.xcor() <= player.xcor() + 10:
-        ball.dx = -ball.dx * 1.05
+    if player.ycor() - 50 <= ball.ycor() <= player.ycor() + 50 and player.xcor() - 10 <= ball.xcor() <= player.xcor() + 30:
+        if super_hit == 0 and player.freeze == 0:
+            ball.dx = -ball.dx * 1.1
+            hit.play()
+        elif player.freeze == 1 and super_hit == 0:
+            ball.dx = -ball.dx / 3
+            player.color('white')
+            hit.play()
+        else:
+            ball.dx = -ball.dx * 3
+            super_hit = 0
+            player.color('white')
+            super_hit_sound.play()
         if player.ycor() < ball.ycor():
             distance = ball.distance(player)
-            ball.dy = (distance / 40)
+            ball.dy = (distance / 30)
         elif player.ycor() > ball.ycor():
             distance = ball.distance(player)
-            ball.dy = (distance / 40) * -1
-    if bot.ycor() - 50 <= ball.ycor() <= bot.ycor() + 50 and bot.xcor() - 10 <= ball.xcor() <= bot.xcor() + 10:
-        ball.dx = -ball.dx * 1.05
+            ball.dy = (distance / 30) * -1
+    if bot.ycor() - 50 <= ball.ycor() <= bot.ycor() + 50 and bot.xcor() - 30 <= ball.xcor() <= bot.xcor() + 10:
+        ball.dx = -ball.dx * 1.1
+        hit.play()
         ball.dy = random.random() * random.choice([1, -1])
 
     if ball.xcor() <= 0:
