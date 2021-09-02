@@ -152,7 +152,7 @@ window.listen()
 window.onkeypress(player.move_up, "Up")
 window.onkeypress(player.move_down, "Down")
 window.onkeypress(player.super_hit, "space")
-window.onkeypress(player.freeze_hit, "q")
+window.onkeypress(player.freeze_hit, "w")
 
 
 def score():
