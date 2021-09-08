@@ -43,8 +43,9 @@ def write_to_base():
 def read_from_base():
     '''При чтении также нужна сессия'''
     session = sessionmaker(bind=engine)()
-    '''Обращаемся к сессии, делаем запрос (query) к таблице (User), фильтруем по имени. Фильтрация на стороне питона,
-    этого не будет в запросе к базе'''
+    '''Обращаемся к сессии, делаем запрос (query) через engine (он (engine) знает, где искать файл таблицы), указываем
+    в какой класс сделать маппинг (User), фильтруем по имени. Фильтрация на стороне питона, этого не будет видно
+     в запросе к базе'''
     q = session.query(User).filter_by(name='Ivan')
     '''Берем оттуда первого Ивана. При этом в питоне формируется объект класса User'''
     some_ivan = q.first()
@@ -73,4 +74,28 @@ def rewrite_to_base():
     session.commit()
 
 
-rewrite_to_base()
+# rewrite_to_base()
+
+
+def asd():
+    session = sessionmaker(bind=engine)()
+    s = session.execute('select * from Users')
+    some_ivan = s.first()
+    print(some_ivan)
+    print(type(some_ivan))
+    print(some_ivan[1])
+
+
+# asd()
+
+
+def delete():
+    '''Удаление объекта. Создаем сессию, указываем класс для маппинга (User), фильтруем, выбираем (q.first), удаляем'''
+    session = sessionmaker(bind=engine)()
+    q = session.query(User).filter_by(name='Petr')
+    petr = q.first()
+    session.delete(petr)
+    session.commit()
+
+
+delete()
