@@ -7,7 +7,7 @@ cur = conn.cursor()
 
 cur.execute("SELECT * FROM users;")
 one_result = cur.fetchone()
-print(one_result)
+print(one_result)  # возвращает кортеж
 '''fetchone() берет первый результат, и запоминает, где он находится. Если вызвать повторно, то fetchone()
 вернет уже следующий результат.'''
 
