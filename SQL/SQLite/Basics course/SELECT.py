@@ -27,3 +27,7 @@ print(all_results)
 '''Тут просто возвращается все, что имеется'''
 
 
+cur.execute("SELECT * FROM users;")
+for result in cur:
+    print(result)
+'''Это способ вывода без fetch. Объект Cursor поддерживает перебор'''

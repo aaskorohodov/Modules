@@ -9,6 +9,9 @@ INSERT INTO people (name, bio, birth, email) VALUES('Aleksei', 'He is a programm
 В этом примере id не передается, так как ему установленно значение AUTO_INCREMENT, она подставится автоматически.
 Также тут дата передается как строка. Передавать все поля необязательно, можно передать лишь часть полей.
 
+Необязательно указывать поля, в которые идет запись, можно просто перечислить VALUES по порядку:
+INSERT INTO people VALUES (.......)
+
 
 Изменение столбца:
 ALTER TABLE people CHANGE birth birth DATE NOT NULL;
