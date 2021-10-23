@@ -41,3 +41,20 @@ def index(request):
          {% endfor %}
 </ul>
 '''
+
+
+
+# context
+'''
+Чтобы не перегружать строчку (render), можно предварительно подготовить словарь с переменными, а затем передать его 
+в специальную переменную context:
+
+def index(request):
+    posts = Women.objects.all()
+    some_name = {
+        'posts': posts,
+        'menu': menu,
+        'title': 'Главная страница'
+    }
+    return render(request, 'women/index.html', context=some_name)
+'''
