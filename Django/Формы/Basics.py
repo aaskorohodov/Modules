@@ -61,4 +61,19 @@ cat читает модель queryset=Category.objects.all(), и делает �
         <div class="form-error">{{ f.errors }}</div>
     {% endfor %}
 
+
+Более подходящее отображение для формы:
+
+    def addpage(request):
+        if request.method == 'POST':  # если request стал POST (форма была отправлена)
+            form = AddPostForm(request.POST)  # формируем форму на основе словаря POST, где лежат заполненные данные
+            if form.is_valid():  # если все норм, то написать очищенные данные в консоли
+                try:
+                    Women.objects.create(**form.cleaned_data)  # распаковываем словарь **
+                    return redirect('home')
+                except:
+                    form.add_error(None, 'Ошибка добавления поста')
+        else:
+            form = AddPostForm()
+        return render(request, 'women/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление статьи'})
 '''
