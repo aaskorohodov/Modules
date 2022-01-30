@@ -5,13 +5,13 @@ import numpy as np
 
 
 a = np.array( [0]*10 )
-# print(a)
+print(a)
 
 a = np.array( [x for x in range(10)] )
-# print(a)
+print(a)
 
 a = np.array( [[0]*5]*2 )
-# print(a)
+print(a)
 
 
 '''Более быстрые по времени исполнения методы:
