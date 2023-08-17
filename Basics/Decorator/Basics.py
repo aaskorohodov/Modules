@@ -1,49 +1,42 @@
-'''
-Декораторы – способ обернуть функцию в функцию.
-'''
+"""
+Decorators ar a way to wrapp one function call into the other, that can execute some additional logic before or/and
+ofter the main function, that is wrapped
+"""
 
 
 def decor(func_to_decorate):
-    '''decor готовит новую функцию (ниже), как бы собирает ее, а затем возвращает ее. Соответственно вызвать decor
-    можно обычным способом:
-        show = decor(show)
-    После этого вызов show() выполнит уже обернутую функцию, так как show = wrapper. Но есть синтаксический сахар:
+    """decor makes a new function (below) and returns it. You can call decor in a usual way:
+         show = decor(show)
+
+    After that, the call to show() will execute the already wrapped function, since show is wrapper. But there is
+    syntactic sugar to do just the same thing:
         @decor
         def show():
-            print('Функция')
-    Результат аналогичен
-    * важно понимать, что результатом работы decor является новая функция, которая состоит из исходная + обертка.
-    Но это именно функция, причем новая, так что вызывая show, мы вызываем эту новую функцию.
-    '''
+            print('Function')
+
+    * it is important to understand that the result of decor is a new function, which consists of the original +
+    wrapper. But it's a function, and a new one, so by calling show we're calling this new function."""
+
     def wrapper():
-        print('Код до функции')
+        print("Logic before main function's call")
         func_to_decorate()
-        print('Код после функции')
+        print("Logic after main function's call")
     return wrapper
 
 
-# @decor
-# def show():
-#     print('Функция')
-
-
-'''
-Функцию также можно обернуть в несколько декораторов, ниже пример.
-'''
-
-
+# You can use several decorators at once
 def decor2(func_to_decorate):
     def wrapper():
-        print('Другой код до функции')
+        print('Some more additional code before')
         func_to_decorate()
-        print('Другой код после функции')
+        print('Some more additional code after')
     return wrapper
 
 
 @decor
 @decor2
 def show():
-    print('Функция')
+    print('Function')
 
 
 show()

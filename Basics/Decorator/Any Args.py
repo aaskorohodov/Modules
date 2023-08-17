@@ -1,18 +1,16 @@
-'''
-Ниже показан пример универсального декоратора, который умеет принимать любое число аргументов и передавать их дальше
-(в декорируемую функцию). Соответственно, если передается 0 аргументов, то ничего и не передается.
-'''
+"""Below is an example of a universal decorator that can take any number of arguments and pass them on
+(into the decorated function). If no arguments are passed, it will still work."""
 
 
 def decor(func):
     def wrapper(*args, **kwargs):
-        '''
-        Тут wrapper принимает любое число *неименованных и **именованных аргументов, печатает их и передает в функцию.
-        Если аргументы не были переданы в декоратор, то они и не попадут в функцию.
-        '''
+        """Here wrapper takes any number of *unnamed and **named arguments, prints them and passes them to
+        its function. If the arguments were not passed to the decorator - still works"""
+
         print('args:', args)
         print('kwargs:', kwargs)
         func(*args, **kwargs)
+
     return wrapper
 
 
@@ -37,14 +35,12 @@ class Mary:
         self.age = 30
 
     @decor
-    def sayYourAge(self, lie = -3):
-        print("Мне {} лет, а ты бы сколько дал?".format(self.age + lie))
+    def say_your_age(self, lie=-3):
+        print("I am {} years old".format(self.age + lie))
 
 
 m = Mary()
-m.sayYourAge()
+m.say_your_age()
 
-'''
-Желательно всегда пробрасывать *args и **kwargs через декоратор. Это позволит менять декорируемую функцию и не трогать
-декоратор.
-'''
+'''It's always a good idea to pass *args and **kwargs through the decorator. This will allow you to change the 
+decorated function with out touching decorator.'''

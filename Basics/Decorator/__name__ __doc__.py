@@ -1,21 +1,22 @@
 def decorator(func):
     def wrapper(*args, **kwargs):
-        print('Decorated')
+        """Wrapper description, it is"""
+
+        print('Decorator logic')
         func(*args, **kwargs)
-    '''
-    Это способ перебросить через декоратор имя функции и ее описание. Все просто и наглядно.
-    '''
+
+    # This is the way to path func's name and description through the decorator
     wrapper.__name__ = func.__name__
     wrapper.__doc__ = func.__doc__
+
     return wrapper
 
 
 @decorator
 def my_func():
-    '''
-    My description here is.
-    '''
-    print('Funch, I am')
+    """Func description, here is"""
+
+    print('Func, I am')
 
 
 my_func()
@@ -23,16 +24,12 @@ print(my_func.__name__)
 help(my_func)
 
 
-'''
-Ниже второй способ сделать тоже самое, только с использованием библиотеки functools.
-'''
-
-
+# The same way of doing this, but with functools
 from functools import wraps
 
 
 def decorator(func):
-    @wraps(func)  # это декоратор, ему надо передать декорируемую функцию, остальное он сделает сам.
+    @wraps(func)  # This is a decorator, it needs the function to be decorated, the rest it will do
     def wrapper(*args, **kwargs):
         print('Decorated')
         func(*args, **kwargs)
@@ -41,10 +38,9 @@ def decorator(func):
 
 @decorator
 def my_func():
-    '''
-    My description here is.
-    '''
-    print('Funch, I am')
+    """Description"""
+
+    print('Func, I am')
 
 
 my_func()

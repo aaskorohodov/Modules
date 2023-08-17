@@ -1,38 +1,46 @@
 """
-Дескрипторы это такие классы, в которых как минимум есть метод __get__. Суть в том, что тут мы в 1 место можем вынести
-кучу сеттеров и геттеров, которые иначе нужно было бы писать под каждый атрибут.
+Descriptors are classes that at least have a __get__ method. The bottom line is that here we can take out in 1 place
+a bunch of setters and getters that would otherwise need to be written under each attribute.
 """
 
 
 class Integer:
     @classmethod
     def verify_coord(cls, coord):
-        """Проверка, чтобы переданные данные были int. Вызывается ниже в __set__"""
+        """Checking that the passed argument is int. Will be called below in __set__"""
+
         if type(coord) != int:
-            raise TypeError("Координата должна быть целым числом")
+            raise TypeError("Coordinate must be an integer!")
 
     def __set_name__(self, owner, name):
-        """В этом методе мы формируем локальное свойство с именем атрибута, добавляя перед ним одно нижнее
-        подчеркивание (так принято делать при определении дескрипторов). В итоге, в экземплярах классов будут храниться
-        имена _x, _y, _z.
-        Метод вызывается автоматически"""
-        self.name = "_" + name
+        """Name setter
+
+        In this method, we form a local property with the name of the attribute by adding one underscore (as it is
+        customary to do when defining descriptors). As a result, class instances will store names _x, _y, _z.
+        The method is called automatically"""
+
+        print('instance.name setter invoked')
+
+        self.name = '_' + name
 
     def __get__(self, instance, owner):
+        """ Getter
+
+        self – link to the instance of that class (on which this method aws called)
+        instance – link onto pt instance
+        owner – link to Point3D (used automatically somewhere inside)
         """
-        self – это ссылка на объект Integer
-        instance – ссылка на экземпляр класса pt
-        owner – ссылка на класс Point3D (используется где-то внутри автоматически, тут не видно)
-        """
+
+        print('Getter invoked')
+
         return getattr(instance, self.name)
-        # Аналог
-        # return instance.__dict__[self.name]
+        # The same as 'return instance.__dict__[self.name]'
 
     def __set__(self, instance, value):
         """
-        self – ссылка на объект дескриптора (экземпляр)
-        instance – ссылка на объект pt, из которого произошло обращение к дескриптору
-        value – присваиваемое значение
+        self – handle object reference (instance)
+        instance – reference to the pt object from which the descriptor was accessed
+        value – assigned value
         """
         self.verify_coord(value)
         setattr(instance, self.name, value)
@@ -42,20 +50,23 @@ class Integer:
 
 
 class Point3D:
-    """Ниже мы просто возвращаем ссылку на x,y,z, которые станут экземплярами класса-дескриптора. В классе-дескрипторе
-    автоматически вызовется метод __set_name__, примерно как __init__. В этом метода будут созданы имена экземпляров
-    Integer, непонятно зачем, они нигде не используются и нам на них фиолетово. Главное, ниже"""
+    """Below, we simply return a reference to x,y,z, which will become instances of the descriptor class. In the
+    descriptor class the __set_name__ method will automatically be called, much like __init__. In this method,
+    instance's names will be created, it is not clear why, they are not used anywhere, and they are purple for us.
+    Main, below"""
+
     x = Integer()
     y = Integer()
     z = Integer()
 
     def __init__(self, x, y, z):
-        """Тут слева (где self.x) x это не просто буква, а экземпляр Integer. То есть мы присваиваем атрибут в имя x,
-        которое (так получилось) еще и экземпляр Integer. А справа от = уже то, что мы туда запишем.
-        Т.е. можно принять не xyz, а abc и записать их справа и ничего не изменит. А можно записать не в self.x,
-        а в self.a, и тогда pt.a не будет экземпляром Integer и мы не будем проверять его на принадлежность к int
-        и делать какую-то другую логику. Ну и не будем ограничивать действия с этим атрибутом, а ведь мы можем, если
-        например не прописать делитер в классе Integer, то удалять не сможем."""
+        """Here on the left (where self.x) x is not just a letter, but an instance of Integer. That is, we assign an
+        attribute to the name x, which (as it happens) is also an Integer instance. And to the right = is what we write
+        there. Those you can take not xyz, but abc and write them on the right and nothing will change. Or you can
+        write it not in self.x, but in self.a, and then pt.a will not be an instance of Integer, and we will not check
+        if it belongs to int and do some other logic. Well, we will not limit actions with this attribute, but we can,
+        if for example, if we do not write a delimiter in the Integer class, then we will not be able to delete it."""
+
         self.x = x
         self.y = y
         self.z = z

@@ -1,14 +1,14 @@
 """
 
-__setattr__(self, key, value) – автоматически вызывается при изменении свойства key класса;
-__getattribute__(self, item) – автоматически вызывается при получении свойства класса с именем item;
-__getattr__(self, item) – автоматически вызывается при получении несуществующего свойства item класса;
-__delattr__(self, item) – автоматически вызывается при удалении свойства item (не важно: существует оно или нет).
+__setattr__(self, key, value) - automatically called when the key property of the class changes;
+__getattribute__(self, item) - automatically called when getting a class property named item;
+__getattr__(self, item) - automatically called when a non-existent item property of the class is received;
+__delattr__(self, item) - automatically called when the item property is deleted (it doesn't matter if item exists or
+    not).
 
 
-'Автоматически вызывается' = мы можем его переписать или дополнить, тогда при стандартном действии логика изменится.
-Например:
-"""
+'Automatically called' == we can overwrite it or add new logic to it
+For example:"""
 
 
 class Point:
@@ -21,28 +21,32 @@ class Point:
         self.name = name
 
     def __setattr__(self, key, value):
-        """Тут запрещается изменять свойство (key=любой атрибут) на z"""
+        """Forbidding changing some exact property (key=any attribute)"""
+
         if key == 'z':
-            raise AttributeError("недопустимое имя атрибута")
+            raise AttributeError("Appropriate property!")
         else:
-            '''Тут нужно обратится к самому верхнему классу object, потому что там происходит смена имени. Если тут,
-            внутри __setattr__, попробовать сделать так "self.__x = value", то случится бесконечная рекурсия, потому
-            что "self.__x = value" будем автоматически вызывать __setattr__, который будет выполнять "self.__x = value",
-            который...'''
+            '''Here you need to refer to the topmost object class, because there is a name change. If here
+             inside __setattr__, try to do this "self.__x = value", then an infinite recursion will happen, because
+             that "self.__x = value" will automatically call __setattr__ which will execute "self.__x = value"
+             which... you get the idea'''
+
             object.__setattr__(self, key, value)
 
     def __delattr__(self, item):
-        """Тут """
-        if item == 'x':
-            raise AttributeError(f'Свойство {self}.{item} нельзя удалять, потому что тогда все сломается!')
+        """Same here, but deleting, instead of setting"""
+
+        if item == 'stand_strong_ukraine':
+            raise AttributeError(f'Property {self}.{item} can not deleted!')
         else:
             object.__delattr__(self, item)
 
     def __str__(self):
-        """Для красоты, чтобы в ошибке была не белиберда"""
+        """Making an Exception message look a bit nicer"""
+
         return self.name
 
 
-a = Point(1, 2, 'Точка_а')
-a.x = 10
-del a.x
+a = Point(1, 2, 'Point A')
+a.stand_strong_ukraine = True
+del a.stand_strong_ukraine

@@ -1,12 +1,11 @@
-'''
-Неизменяемый упорядоченный тип данных. Как список, только неизменяемый.
-'''
+"""An immutable ordered data type. Like a list, only immutable."""
 
-tupl = tuple()
+my_tuple = tuple()
 
-'''Чтобы сделать кортеж из 1 элемента, нужно указать запятую, иначе получится строка'''
+'''To make a tuple of 1 element, you need to use a comma, otherwise the result will be a string'''
 
-tupl = ('some_thing',)
+my_tuple1 = ('some_thing',)
+print(type(my_tuple1))  # tuple
 
-tupl = ('some_thing')
-print(type(tupl))
+my_tuple1 = ('some_thing')
+print(type(my_tuple1))  # str

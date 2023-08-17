@@ -1,25 +1,23 @@
 """
-Метод __new__ вызывается перед созданием экземпляра класса.
+The __new__ method is called before the class is instantiated.
 
-1. сначала идет __new__
-2. создается экземпляр
-3. вызывается __init__ (если переписан)
+1. first comes __new__
+2. an instance is created
+3. __init__ is called (if rewritten)
 
-__new__ возвращает адрес нового созданного объекта, если этого не сделать, то объектом будет None, потому что если
-__new__ ничего не вернул, то None.
-Необязательно прописывать это руками, так как все классы в Python наследуются от базового object, в котором уже есть
-__new__. Поэтому можно сделать так:
-"""
+__new__ returns the address of the newly created object, if this is not done, then the object will be None.
+It is not necessary to write this manually, since all classes in Python are inherited from the base object, which
+already has __new__. Therefore, you can do this:"""
 
 
 class Point:
     def __new__(cls, *args, **kwargs):
-        print("вызов __new__ для " + str(cls))
+        print("Invoking __new__ for " + str(cls))
         return super().__new__(cls)
 
 
 a = Point()
 
-'''cls = ссылка на текущий класс Point, args и kwargs не нужны, но их лучше принять, ведь дальше может пойти __init__,
-который потребует каких-то переменных, а при создании экземпляра (если он создается с переменными a = Point(1,2))
-переменные передаются и в __new__ и в __init__.'''
+'''cls = reference to the current Point class, args and kwargs are not needed, but it is better to accept them, 
+because __init__ can go further, which will require some variables, while when creating an instance (if it is 
+created with variables, e.q: a = Point(1,2)) variables are passed to both __new__ and __init__.'''

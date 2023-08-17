@@ -1,16 +1,16 @@
-'''
-3 основных принципа ООП:
+"""
+3 basic principles of OOP:
 
-    - инкапсуляция
-    - наследование
-    - полиморфизм
+     - encapsulation
+     - inheritance
+     - polymorphism
 
-Инкапсуляций = не только размещение методов (и данных) внутри одного объекта (класса), но и скрытие их от пользователя.
-Т.е. инкапсуляция это такие методы, к которым нельзя напрямую обратиться, но они работают внутри класса.
+Encapsulation == not only placing methods (and data) inside one object (class), but also hiding them from the user.
+I.e. encapsulation are methods that cannot be directly accessed, but they work inside the class.
 
-Наследование = хранение общих данных или методов в классе-родителе.
+Inheritance == storing shared data or methods in the parent class.
 
-Полиморфизм = способность единым образом работать с разными типами данных. Полиморфизм предполагает, что можно создать
-базовый класс с базовым методом, унаследовать от него дочерние и дополнить базовый метод доп.функционалом, присущим
-конкретному дочернему классу.
-'''
+Polymorphism == the ability to work with different data types in a unified way. Polymorphism means that you can create
+base class with a base method, inherit from it child ones and add the base method with additional functionality,
+ that is specific for concrete child class.
+"""

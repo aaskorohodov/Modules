@@ -1,11 +1,11 @@
 """
-property дает возможность работать с приватными атрибутами так, как если бы они были обычными. Это нужно, чтобы
-ограничить лишь часть функционала, например чтобы можно было записать данные, но нельзя удалить.
+@property makes it possible to work with private attributes as if they were normal. This is helpful in order to
+limit only part of the functionality, for example, so that data can be written, but cannot be deleted.
 
-property задается как атрибут, которому дается любое имя, а сам property последовательно принимает сеттеры, геттеры и
-делитеры, (именно в таком порядке) в качестве аргументов. property сам вызовет свой первый, второй или третий аргумент,
-в зависимости от обстоятельств, сделает что нужно и если там геттер, то вернет то, что возвращает геттер, а если
-сеттер, то сделает то, что делает сеттер.
+property is defined as an attribute, which is given any name you want, and property itself accepts setters, getters, and
+delimiters, (in that order) as arguments. property itself will call its first, second or third argument,
+depending on the circumstances, will do what is needed and if there is a getter, then it will return what the getter
+returns, and if there is - setter will call it.
 """
 
 
@@ -22,13 +22,13 @@ class Person:
 
     old = property(get_old, set_old)
 
-    # Полный аналог того, что выше (но так не надо, будет PyCharm будет ошибки подчеркивать, но все будет работать)
-    # Даем ссылку на property
+    # A complete analogue of what is above (PyCharm will warn you, but still works)
+    # Link to the property
     # old = property()
-    # Даем ссылку на самого себя, но со встроенным сеттером
-    # old = old.setter(set_old)
-    # А теперь встраиваем геттер
-    # old = old.getter(get_old)
+    # Reference to itself, but with a built-in setter
+    # old = old setter(set_old)
+    # And the getter
+    # old = old getter(get_old)
 
 
 p = Person('Peter', 30)
@@ -37,17 +37,18 @@ p.old = 35
 print(p.old)
 print(d.old)
 
-# это вызовет ошибку, потому что свойство приватное, удалить нельзя, делитера нет
+# This will cause an error, because the property is private, it cannot be deleted, there is no delimiter
 # del p.old
 
 
 class Person:
-    """Тоже самое, только с декораторами"""
+    """The same thing, but with decorators"""
+
     def __init__(self, name, old):
         self.__name = name
         self.__old = old
 
-    # !Первым обязательно прописывается геттер!
+    # Getter MUST always go first
     @property
     def old(self):
         return self.__old
@@ -59,6 +60,7 @@ class Person:
     @old.deleter
     def old(self):
         del self.__old
+
 
 print('')
 s = Person('Sam', 25)

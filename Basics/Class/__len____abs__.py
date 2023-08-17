@@ -1,5 +1,5 @@
-"""Изначально в определяемых пользователем классах нет поддержки функций len и abs, но их можно прописать вручную,
-используя свою логику."""
+"""Initially, user-defined classes do not support len() and abs() methods, but they can be written manually,
+using your own logic."""
 
 
 class Point:
@@ -7,9 +7,8 @@ class Point:
         self.__coords = args
 
     def __len__(self):
-        """Тут мы считаем длину тип для линии, вычитая из первой точки последнюю (а можно наоборот). У len есть
-        вшитое ограничение - он не может возвращать отрицательное число (типо длина не может быть отрицательной).
-        Поэтому чтобы не было ошибки, предварительно делаем abs, никак не связанный с abs в этом классе."""
+        """Calculates length of an object"""
+
         listed_coords = list(self.__coords)
         distance = listed_coords[-1] - listed_coords[0]
         if distance < 0:
@@ -17,8 +16,11 @@ class Point:
         return distance
 
     def __abs__(self):
-        """А тут делаем список из имеющихся координат, прогоняя каждую через обычный abs (map умеет склеивать функцию
-        с какими-то данными, перебирая их (данные))"""
+        """Making a list of positive values from coords
+
+        Note that map() can apply some method to all elements of iterable object. In this case, it is applied to
+        all elements of a list and returns map-object, which we convert into list"""
+
         return list(map(abs, self.__coords))
 
 

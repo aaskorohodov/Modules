@@ -1,8 +1,8 @@
 """
-@classmethod = метод, имеющий доступ только к атрибутам класса, но не его экземпляров
-@staticmethod = метод, не имеющий доступ ни к атрибутам класса, ни к атрибутам экземпляров
+@classmethod = method that only accesses class attributes, not class instances
+@staticmethod = method that does not have access to class or instance attributes
 
-Оба определяются внутри класса, путем постановки на метод соответствующего декоратора
+Both are defined inside the class by setting the appropriate decorator on the method.
 """
 
 
@@ -11,8 +11,9 @@ class Vector:
     MAX_COORD = 100
 
     def __init__(self, x, y):
-        """Пример использования метода класса (он ниже). Обращение к нему идет через пространство имен класса,
-        но эту строчку можно заменить на    if self.validate(x) and self.validate(y)    и будет работать аналогично."""
+        """An example of using a class method (it is below). It is accessed through the class namespace,
+         but this line can be replaced with if self.validate(x) and self.validate(y) and will work similarly."""
+
         if Vector.validate(x) and Vector.validate(y):
             self.x = x
             self.y = y
@@ -24,22 +25,22 @@ class Vector:
         return self.x, self.y
 
     @classmethod
-    # cls = class, это ссылка на сам класс
+    # cls = class, link to the class itself
     def validate(cls, arg):
         return cls.MIN_COORD <= arg <= cls.MAX_COORD
 
     @staticmethod
-    def do_smth():
-        print('smth')
+    def do_something():
+        print('Something is done. Great!')
 
 
 a = Vector(5, 101)
 print(a.x, a.y)
 
-# Можно звать метод на класс, а можно на экземпляр
+# classmethod can be called on class itself or ots instance
 print(Vector.validate(5))
 print(a.validate(101))
 
-# И так и эдак
-a.do_smth()
-Vector.do_smth()
+# Both works as well
+a.do_something()
+Vector.do_something()

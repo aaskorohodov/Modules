@@ -1,19 +1,25 @@
+"""isinstance checks, if an object belongs to some class"""
+
+
 class Time:
-    def __init__(self, hour, min, sec):
+    def __init__(self, hour, mins, sec):
         self.hour = hour
-        self.min = min
+        self.min = mins
         self.sec = sec
 
     def __add__(self, other):
+        """Overrides action to perform, when operator '+' is used on that instance"""
+
+        # Checking, that provided object belongs to class Time
         if isinstance(other, Time):
-            '''Проверяет, что объект находится в класса'''
             hours = self.hour + other.hour
             mins = self.min + other.min
             secs = self.sec + other.sec
             new_time = Time(hours, mins, secs)
+            print('asdasd')
             return new_time
         else:
-            return 'Это не экземпляр класса'
+            return 'Not an instance'
 
     def __str__(self):
         return f'{self.hour}:{self.min}:{self.sec}'
@@ -24,4 +30,4 @@ t2 = 122552
 
 print(t1 + t2)
 
-print(isinstance(t2, Time))  # более простая проверка
+print(isinstance(t2, Time))

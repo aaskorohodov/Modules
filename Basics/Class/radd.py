@@ -25,8 +25,9 @@ class Point:
         return res
 
     def __radd__(self, other):
-        '''Дает возможность складывать объект и класс, а не только класс и объект.
-        Т.е. меняет местами элементы сложения. Right Add'''
+        """Gives the ability to add an object and a class, not just a class and an object.
+        i.e. swaps the elements. Right Add"""
+
         return self.__add__(other)
 
 

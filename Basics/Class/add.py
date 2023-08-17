@@ -1,11 +1,16 @@
+"""Method class.add() defines the behavior of the operator '+', when used on the instance of some class"""
+
+
 class Time:
-    def __init__(self, hour, min, sec):
+    def __init__(self, hour, mins, sec):
         self.hour = hour
-        self.min = min
+        self.min = mins
         self.sec = sec
 
     def __add__(self, other):
-        '''Переопределение логики сложения для экземпляров класса'''
+        """Defining logic for '+'."""
+
+        print(f'Custom method {self.__class__.__name__}.add() is called')
         hours = self.hour + other.hour
         mins = self.min + other.min
         secs = self.sec + other.sec

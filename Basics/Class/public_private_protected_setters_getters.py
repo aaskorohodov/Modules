@@ -1,13 +1,13 @@
 """
-public, protected, private  = режимы доступа к атрибутам и методам классов.
+public, protected, private = access modes to class attributes and methods.
 
-public = обычные переменные и методы, полный доступ
-protected = аналогично, только перед ним стоит _ 1шт (никакой защиты нет)
-private = доступ напрямую закрыт (даже прочитать нельзя), но можно обратится внутри класса
+public = normal variables and methods, full access
+protected = similar, but shows that this is kinds private (there is no protection)
+private = direct access is closed (not even readable), but can be accessed inside the class
 
-Чтобы менять или читать private, нужно создавать методы, которые обычно начинают с get и set, потому их называют геттеры
-и сеттеры. Идя в том, что внутри такого метода можно сделать, например, проверку на тип данных (чтобы строку в числовой
-атрибут не записать)
+To change or read privates, you need to create methods that usually start with get and set, so they are called getters
+and setters. The idea is that inside such a method you can do, for example, checking for the data type
+(so that the string into a numeric attribute not written)
 """
 
 
@@ -17,10 +17,9 @@ class Point:
         self.__y = y
 
     def set_coord(self, x, y):
-        # Тут можно сделать проверку на тип данный
+        # Here w can add some additional logic, for example check arguments types
         self.__x = x
         self.__y = y
 
     def get_coord(self):
         return self.__x, self.__y
-

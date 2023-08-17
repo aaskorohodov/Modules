@@ -1,37 +1,39 @@
-'''
-Изменяемый упорядоченный тип данных
-'''
+"""
+Mutable and ordered data type
+"""
 
-lis = [1,2,3,4,5,6]
+lis = [1, 2, 3, 4, 5, 6]
 
-'''Так как список упорядочен, то мы можем менять его элементы, подобно словарю:'''
+'''Since the list is ordered, we can change its elements, like a dictionary:'''
 
 lis[1] = 100
 
-
-
-
-# ПОЛЕЗНЫЕ МЕТОДЫ
+# Useful methods
 
 lis = ['1', '2', '3']
 
-a = '+'.join(lis)  # клеит строки в одну строку, через указанный разделитель
+a = '+'.join(lis)  # Combines into a single string, using '+' as delimiter
 print(a)
 
-lis.append('4')  # добавить в список что-нибудь
+lis.append('4')  # Appends elements at the end of the list
 
-lis1 = [1,2,3,4,5]
-lis2 = [10,20,30,40,50]
+lis1 = [1, 2, 3, 4, 5]
+lis2 = [10, 20, 30, 40, 50]
 
 lis3 = lis2 + lis1
 
-lis1.extend(lis2)  # дополняет список 1 списком 2. Отличается от простого сложения – тут первый список изменяется
+lis1.extend(lis2)  # Extends one list with the second. Unlike simple '+', the first list is changed
 
-print(lis1.pop(-1))  # pop удаляет указанный элемент и возвращает его
-lis1.remove(1)  # remove ничего не возвращает. Требует указать сам элемент, а не его номер
+print(lis1.pop(-1))  # Deletes some element and returns it
 
-print(lis1.index(30))  # укажет номер элемента в списке, либо вернет ошибку
+lis_string = ['string1', 'string2']
+lis_string.remove('string1')  # Removes element, without returning it. Note, that it requires the element, not index
+print(lis_string)
 
-lis1.insert(0, 'первый элемент')  # вставляет элемент в нужное место
-'''Не умеет ставить элемент в конец без хитрости – нужно указать позицей нового элемента длину списка (len(lis)...)'''
+print(lis1.index(30))  # Return an index, or raises an error
 
+lis1.insert(0, 'first element')  # Inserts an element into requested position
+
+# Inserting an element into the end:
+lis1.insert(len(lis1), 'last element')
+print(lis1)     # [..., 'last_element']

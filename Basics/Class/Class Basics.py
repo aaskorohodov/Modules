@@ -1,30 +1,33 @@
 class Car:
     def __init__(self, brand=None, model=None):
-        '''Инициализация объекта класса'''
+        """Initializing a class object"""
+
         self.brand = brand
         self.model = model
 
     def honk(self):
-        '''Метод класса. Метод класса = функция, только она вызывается на объект класса'''
+        """Class method. Class method == function, only it is called on the instance of that class"""
+
         print(f'{self.brand} {self.model} honks')
 
     def __str__(self):
-        '''Переопределение метода print для объекта класса'''
+        """Overriding default method, which returns the string representation of that instance"""
+
         return f'{self.brand} {self.model}'
 
 
-vaz = Car('Vaz', '2107') # создание экземпляра класса
-print(vaz) # вызов переопределенного метода print
-vaz.honk() # вызов метода honk
-vaz.model = 2010 # переписывание атрибута класса
+vaz = Car('Vaz', '2107')    # Creating instance
+print(vaz)                  # Calling for overriden __str__ (it will be called automatically by the print())
+vaz.honk()                  # Calling method honk()
+vaz.model = 2010            # Overriding some attribute's value
 print(vaz)
 
 
 class YAZ(Car):
-    '''Наследование класса'''
+    """Inheritance"""
 
     def honk(self):
-        print('Переопределенный метод родительского класса')
+        print('Overriding method of the parent class')
 
 
 yaz = YAZ('Yaz', '51444')
@@ -32,6 +35,5 @@ print(yaz)
 yaz.honk()
 
 
-print(YAZ.__doc__)  # вывод описания класса
-print(yaz.__dict__)  # вывод локальный переменных, т.е. тех переменных, которые есть в этом объекте. Может отличаться
-                     # от класса, к которому этот экземпляр принаждлежит, например, если переписать
+print(YAZ.__doc__)      # Documentation for that class (will print 'Inheritance')
+print(yaz.__dict__)     # All attributes of that instance
