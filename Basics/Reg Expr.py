@@ -2,60 +2,60 @@ import re
 
 
 r'''
-match - ищет последовательность в начале строки
-search - ищет первое совпадение с шаблоном
-findall - ищет все совпадения с шаблоном. Возвращает результирующие строки в виде списка
-finditer - ищет все совпадения с шаблоном. Возвращает итератор
-compile - компилирует регулярное выражение. К этому объекту затем можно применять все перечисленные функции
-fullmatch - вся строка должна соответствовать описанному регулярному выражению
-sub - для замены в строках
-split - для разделения строки на части
+match - looks for a sequence at the beginning of a string
+search - looks for the first match of the pattern
+findall - Looks for all matches of a pattern. Returns the resulting strings as a list
+finditer - Looks for all matches of a pattern. Returns an iterator
+compile - compiles a regular expression. All of the above functions can then be applied to this object.
+fullmatch - the entire string must match the described regular expression
+sub - for replacement in strings
+split - to split a string into parts
 
-Вызывается: re.match(a, b)
+Called: re.match(a, b)
 
-re – Библиотека для работы с регулярными выражениями
+re - Library for working with regular expressions
 
-. – один любой символ, кроме новой строки \n.
-\ – экранирование символа ('.' – ищет любой символ, '\.' – ищет точку)
-\d – соответствует любой одной цифре и заменяет собой выражение [0-9];
-\D – исключает все цифры и заменяет [^0-9];
-\w – заменяет любую цифру, букву, а также знак нижнего подчёркивания;
-\W – любой символ кроме латиницы, цифр или нижнего подчёркивания;
-\s – соответствует любому пробельному символу;
-\S – описывает любой непробельный символ;
-\b – Начало или конец слова (слева пусто или не-буква, справа буква и наоборот). В отличие от предыдущих соответствует позиции, а не символу
-\B – Не граница слова: либо и слева, и справа буквы, либо и слева, и справа НЕ буквы
-[] – ищет\заменяет все внутри. Может принимать диапазон [1-5A-Za-z] (это 3 диапазона, херово записывается)
-*буква ё не включается в диапазон а-я, её надо включать отдельно
-[^] – любой символ, кроме указанных [^а] – кроме а
-() – группировка (либо то, либо это)
+. – any single character, except newline \n.
+\ - character escape ('.' - looks for any character, '\.' - looks for a dot)
+\d - matches any one digit and replaces the expression [0-9];
+\D - excludes all digits and replaces [^0-9];
+\w - replaces any number, letter, and underscore;
+\W - any character except Latin, digits or underscore;
+\s - matches any whitespace character;
+\S describes any non-whitespace character;
+\b - Beginning or end of a word (left is empty or non-letter, right is a letter and vice versa). Unlike the previous ones, matches a position, not a character
+\B - Not a word boundary: either left and right are letters, or both left and right are NOT letters
+[] - searches/replaces everything inside. Can accept the range [1-5A-Za-z] (that's 3 ranges, it's badly written)
+* the letter ё is not included in the range a-z, it must be included separately
+[^] - any character, except for the specified [^a] - except for a
+() - grouping (either this or that)
 
-Квантификаторы:
-{} – указывает число повторений предыдущего символа {1}{2}{3}...
-{1, 5} – от 1 до 5 повторений
-{2,} – не менее 2 повторений
-{,5} – не более 5 повторений
-? – Ноль или одно вхождение, синоним {0,1}
-* – Ноль или более, синоним {0,}
-+ – Одно или более, синоним {1,}
-$ – ищет в конце строки. Ставить $ нужно в конце выражения (...$ – любые 3 символа в конце строки)
-^ – ищет в начале строки. Ставить надо в начале выражения (^... – любые 3 символа в начале строки)
+Quantifiers:
+{} - indicates the number of repetitions of the previous character {1}{2}{3}...
+{1, 5} - 1 to 5 repetitions
+{2,} - at least 2 repetitions
+{,5} - no more than 5 repetitions
+? – Zero or one occurrence, synonym for {0,1}
+* – Zero or more, synonym for {0,}
++ - One or more, synonym for {1,}
+$ - Looks for the end of a string. You need to put $ at the end of the expression (...$ - any 3 characters at the end of the line)
+^ - Looks for the beginning of a line. You must put it at the beginning of the expression (^... - any 3 characters at the beginning of the line)
 
 
 
-Примеры:
-\d{5} – любые 5 цифр
-\d\d/\d\d/\d{4} – даты в формате дд/мм/гггг. Можно переписать так: \d{2}/\d{2}/\d{4}
-.$ – любой символ в конце строки
-\.$ – точку в конце строки
-^\. – точку в начале строки
-[sw] – найти все символы s и w, в любом месте, в любом порядке, хоть вместе, хоть по одному
-[^sw] – найти все символы кроме s и w (будут найдены все буквы, цифры и пробелы по одному, кроме s, w)
-^[^b] – найти все строки, которые начинаются не с b
-.*ing – слова, заканчивающиеся на ing
-\s\w\w\w\s – слово из трех букв (если после слова точка, то не найдет). В выводе будут слова и пробелы (' hell ')
-\b\w\w\w\w\b – слово из 4 букв, и похрен на точки и другую пунктуацию. В выводе будут только слова ('hell')
-\b\w{4}\b – аналогично, только с квантификатором
+Examples:
+\d{5} - any 5 digits
+\d\d/\d\d/\d{4} – dates in dd/mm/yyyy format. Can be rewritten like this: \d{2}/\d{2}/\d{4}
+.$ - any character at the end of the string
+\.$ - dot at the end of the line
+^\. - dot at the beginning of the line
+[sw] - find all characters s and w, anywhere, in any order, at least together, at least one at a time
+[^sw] - find all characters except s and w (all letters, numbers and spaces will be found one by one, except s, w)
+^[^b] - find all lines that do not start with b
+.*ing - words ending in ing
+\s\w\w\w\s is a three-letter word (if there is a dot after the word, it will not be found). The output will contain words and spaces (' hell ')
+\b\w\w\w\w\b is a 4 letter word, and fuck the dots and other punctuation. The output will only contain words ('hell')
+\b\w{4}\b - similar, but with a quantifier
 '''
 
 
@@ -63,6 +63,7 @@ def email_1():
     s = 'aasd@gmail.com'
     pattern = r'\w+@\w+\.\w+'
     print(re.findall(pattern, s))
+
 
 email_1()
 
@@ -72,81 +73,95 @@ def any_4_letter_words():
     pattern = r'\b\w\w\w\w\b'
     print(re.findall(pattern, s))
 
-#any_4_letter_words()
+
+any_4_letter_words()
 
 
 def any_email():
-    s = 'привет1 привет22 привет333 aaskorohodov@gmail.com hi@gmail.com'
+    s = 'hello1 hello22 hello333 asdasdasd@gmail.com hi@gmail.com'
     pattern = r'\w+@\w+[.][a-z]+'
     print(re.findall(pattern, s))
 
-#any_email()
+
+any_email()
 
 
 def any_3_letters_words():
-    '''Поиск любые пять цифер'''
+    """Any 5 numbers"""
+
     s = 'asd44444asdasd555555555577777888 asasdd asd dsa asdfasfjhsf fff'
     pattern = r'\b\w{3}\b'
     res = re.findall(pattern, s)
     print(res)
 
-#any_3_letters_words()
+
+any_3_letters_words()
 
 
 def replace():
-    '''Замена элемента в строке. Чувствительна к регистру'''
-    s = 'Привет, привет, Привет'
-    s = re.sub('Привет', 'пока', s)
+    """Replacing an element in a string. Case-sensitive"""
+
+    s = 'Hello, hello, Hello'
+    s = re.sub('Hello', 'goodbye', s)
     print(s)
 
-#replace()
+
+replace()
 
 
 def list_of_letters():
-    '''Выплевывает список со всеми буквами. Игнорирует пунктуацию.'''
-    s = 'Привет, меня зовут Аркаша'
+    """Gets a list with all the letters. Ignores punctuation."""
+
+    s = 'Hey, my name is Arkady'
     pattern = r'\w'
     res = re.findall(pattern, s)
     print(res)
 
-#list_of_letters()
+
+list_of_letters()
 
 
 def list_of_words():
-    '''Выплевывает список слов'''
-    s = 'Привет, меня зовут Аркаша'
+    """Makes a list of words"""
+
+    s = 'Hey, my name is Arkady'
     pattern = r'\w+'
     res = re.findall(pattern, s)
     print(res)
 
-#list_of_words()
+
+list_of_words()
 
 
 def list_of_words_with_spaces():
-    '''Список слов, после которых есть пробел'''
-    s = 'Привет, меня зовут Аркаша'
+    """List of words followed by a space"""
+
+    s = 'Hey, my name is Arkady'
     pattern = r'\w+\s'
     res = re.findall(pattern, s)
     print(res)
 
-#list_of_words_with_spaces()
+
+list_of_words_with_spaces()
 
 
 def long_pattern_search():
-    s = 'Добрый день, меня зовут Господин Аркадий А.А.'
-    pattern = r'[А-Яа-я]+\s'
+    s = 'Good afternoon, my name is Mr. Arkady A.A.'
+    pattern = r'[A-Za-z]+\s'
     res = re.findall(pattern, s)
     print(res)
 
-#long_pattern_search()
+
+long_pattern_search()
 
 
 def find_all_5_num():
-    '''Поиск любые пять цифер'''
+    """Any 5 numbers"""
+
     s = 'asd44444asdasd555555555577777888'
     pattern = r'\d{5}'
     res = re.findall(pattern, s)
     print(res)
 
-#find_all_5_num()
 
+find_all_5_num()

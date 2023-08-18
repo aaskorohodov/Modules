@@ -14,7 +14,7 @@ class Point:
 
     def add_points(self, other):
         res = Point()
-        res.x = self.x + other.x
+        res.x = self.x + other.num
         res.y = self.y + other.y
         return res
 

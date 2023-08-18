@@ -7,11 +7,11 @@ time_now = datetime.datetime.now()
 
 print(time_now)
 
-print('День')
+print('Day')
 day = str(input())
-print('Час')
+print('Hour')
 hour = str(input())
-print('Минуты')
+print('Minute')
 minutes = str(input())
 
 if len(day) == 1:

@@ -2,76 +2,82 @@ import datetime
 
 
 '''
-Класс datetime.date(year, month, day) – стандартная дата. Атрибуты: year, month, day. Неизменяемый объект.
-Класс datetime.time(hour=0, minute=0, second=0, microsecond=0, tzinfo=None) – стандартное время, не зависит от даты. Атрибуты: hour, minute, second, microsecond, tzinfo.
-Класс datetime.timedelta – разница между двумя моментами времени, с точностью до микросекунд.
-Класс datetime.tzinfo – абстрактный базовый класс для информации о временной зоне (например, для учета часового пояса и / или летнего времени).
-Класс datetime.datetime(year, month, day, hour=0, minute=0, second=0, microsecond=0, tzinfo=None) – комбинация даты и времени.
+class datetime.date(year, month, day) is a standard date. Attributes: year, month, day. An immutable object.
+The datetime.time(hour=0, minute=0, second=0, microsecond=0, tzinfo=None) class is a standard time, independent of the 
+    date. Attributes: hour, minute, second, microsecond, tzinfo.
+The datetime.timedelta class is the difference between two points in time, accurate to microseconds.
+The datetime.tzinfo class is an abstract base class for time zone information (for example, to account for time zone
+    and/or daylight saving time).
+class datetime.datetime(year, month, day, hour=0, minute=0, second=0, microsecond=0, tzinfo=None) is a combination of
+    date and time.
 
 
-Методы класса datetime:
+datetime class methods:
 
-datetime.today() - объект datetime из текущей даты и времени. Работает также, как и datetime.now() со значением tz=None.
-datetime.fromtimestamp(timestamp) - дата из стандартного представления времени.
-datetime.fromordinal(ordinal) - дата из числа, представляющего собой количество дней, прошедших с 01.01.1970.
-datetime.now(tz=None) - объект datetime из текущей даты и времени.
-datetime.combine(date, time) - объект datetime из комбинации объектов date и time.
-datetime.strptime(date_string, format) - преобразует строку в datetime (так же, как и функция strptime из модуля time).
-datetime.strftime(format) - см. функцию strftime из модуля time.
-datetime.date() - объект даты (с отсечением времени).
-datetime.time() - объект времени (с отсечением даты).
-datetime.replace([year[, month[, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]]]]]) - возвращает новый объект datetime с изменёнными атрибутами.
-datetime.timetuple() - возвращает struct_time из datetime.
-datetime.toordinal() - количество дней, прошедших с 01.01.1970.
-datetime.timestamp() - возвращает время в секундах с начала эпохи.
-datetime.weekday() - день недели в виде числа, понедельник - 0, воскресенье - 6.
-datetime.isoweekday() - день недели в виде числа, понедельник - 1, воскресенье - 7.
-datetime.isocalendar() - кортеж (год в формате ISO, ISO номер недели, ISO день недели).
-datetime.isoformat(sep='T') - красивая строка вида "YYYY-MM-DDTHH:MM:SS.mmmmmm" или, если microsecond == 0, "YYYY-MM-DDTHH:MM:SS"
+datetime.today() is a datetime object from the current date and time. Works the same as datetime.now() with tz=None.
+datetime.fromtimestamp(timestamp) - date from standard time representation.
+datetime.fromordinal(ordinal) - a date from a number representing the number of days since 01/01/1970.
+datetime.now(tz=None) - a datetime object from the current date and time.
+datetime.combine(date, time) - a datetime object from a combination of date and time objects.
+datetime.strptime(date_string, format) - converts a string to a datetime (same as the strptime function from the time 
+    module).
+datetime.strftime(format) - see the strftime function from the time module.
+datetime.date() is a date object (with time clipping).
+datetime.time() is a time object (with date clipping).
+datetime.replace([year[, month[, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]]]]) - returns a new datetime
+    object with the attributes changed.
+datetime.timetuple() - returns struct_time from datetime.
+datetime.toordinal() - number of days since 01/01/1970.
+datetime.timestamp() - returns the time in seconds since the epoch.
+datetime.weekday() - the day of the week as a number, Monday is 0, Sunday is 6.
+datetime.isoweekday() - the day of the week as a number, Monday is 1, Sunday is 7.
+datetime.isocalendar() is a tuple (ISO year, ISO week number, ISO day of the week).
+datetime.isoformat(sep='T') - nice string like "YYYY-MM-DDTHH:MM:SS.mmmmmm" or if microsecond == 0,
+    "YYYY-MM-DDTHH:MM:SS"
 '''
 
 
 print(datetime.datetime.today())
 print(datetime.datetime.now())
-'''Различается только возможностью передавать во второй временную зону'''
+# Differs only in the ability to accept time zone (by the second one)
 
 
 d1 = datetime.datetime.today()
 d1 = d1 + datetime.timedelta(days=1)
 print(d1)
-'''Прибавляет 1 день'''
+# Adds 1 day
 
 d2 = d1 + datetime.timedelta(days=10)
 print(d2)
-'''Прибавляет 10 дней'''
+# Adds 10 days
 
 print(d2 - d1)
-'''Вычитание дат'''
+# Date subtraction
 
 print((d2 - d1).days)
-'''Смотрим только атрибут дни'''
+# Taking anly days
 
 print(d1.strftime('%A %d %B %Y'))
-'''Вывод в удобночитаемом формате. strftime принимает много разных атрибутов, для форматирования представления'''
+# Output in human-readable format. strftime takes many different attributes to format the view
 
 d = datetime.date(2021, 7, 21)
 t = datetime.time(12, 30)
 dt = datetime.datetime.combine(d, t)
 print(dt)
-'''Создание объектов вручную и их сложение'''
+# Creating DT-object by combining date and time
 
 dt = dt.timetuple()
 for el in dt:
     print(el)
 '''
-Создает кортеж, его можно перебирать
+Creates a tuple that can be iterated over
 2021    # year
-7      # month
+7       # month
 21      # day
 12      # hour
-30      # minute
+30      # minutes
 0       # second
-2       # weekday (0 = Monday)
+2       #weekday (0 = Monday)
 202     # number of days since 1st January
 -1      # dst - method tzinfo.dst() returned None
 '''
@@ -81,38 +87,39 @@ print(tday.weekday())
 print(tday.isoweekday())
 
 '''
-.date.weekday – неделя начинается с 0 (пн = 0, вс = 6)
-.date.isoweekday – неделя начинается с 1 (пн = 1, вс = 7)
+.date.weekday - week starts at 0 (Mon = 0, Sun = 6)
+.date.isoweekday - week starts at 1 (Mon = 1, Sun = 7)
 '''
 
-# немного примеров работы с datetime:
+# Some examples
 
 tdelta = datetime.timedelta(days=7)
-print('Какая дата будет через 7 дней:', tday + tdelta)
+print('What date will be in 7 days:', tday + tdelta)
 
 bday = datetime.date(tday.year, 10, 2)
 till_bday = bday - tday
-print('До дня рождения осталось', till_bday.days, 'дней')
-print('До дня рождения осталось', till_bday.total_seconds(), 'секунд')
+print('Till birthday ', till_bday.days, 'дней')
+print('Till birthday ', till_bday.total_seconds(), 'секунд')
 
 
 t = datetime.time(9, 30, 45)
-'''Только время. Можно дополнительно добавить миллисекунды'''
+# Time only. You can optionally add milliseconds
 d = datetime.date(2021, 5, 21)
-'''Только дата'''
+# Date only
 dt = datetime.datetime(2021, 5, 21, 9, 30, 45)
-'''И дата, и время'''
+# Date and time
 
 print(dt.time())
-'''Достает time из datetime'''
+# Getting time from DT
 
 
 import pytz
-'''Дает информацию о временных зонах. Рекомендован в документации datetime'''
+# Provides info about time zones. Recommended in datetime documentation
 
 
 def tz():
-    '''Показывает все доступные временные зоны'''
+    """Shows all available time-zones"""
+
     for tz in pytz.all_timezones:
         print(tz)
 
